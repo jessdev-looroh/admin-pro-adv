@@ -5,11 +5,7 @@
 >
   <div class="login-box card">
     <div class="card-body">
-      <form
-        class="form-horizontal form-material"
-        id="loginform"
-        action="index.html"
-      >
+      <form class="form-horizontal form-material" id="loginform">
         <a href="javascript:void(0)" class="text-center db"
           ><img src="../assets/images/logo-icon.png" alt="Home" /><br /><img
             src="../assets/images/logo-text.png"
@@ -57,7 +53,7 @@
           <div class="col-xs-12">
             <button
               class="btn btn-info btn-lg btn-block text-uppercase btn-rounded"
-              type="submit"
+              (click)="login()"
             >
               Log In
             </button>
