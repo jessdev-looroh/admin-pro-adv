@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Sample Form with the Icons</h4>
+        <h6 class="card-subtitle">made with bootstrap elements</h6>
+        <form
+          class="form p-t-20"
+          [formGroup]="perfilForm"
+          (ngSubmit)="actualizarPerfil()"
+        >
+          <div class="form-group">
+            <label for="exampleInputuname">User Name</label>
+            <div class="input-group">
+              <div class="input-group-addon"><i class="ti-user"></i></div>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputuname"
+                formControlName="nombre"
+                placeholder="Nombre usuario"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <div class="input-group">
+              <div class="input-group-addon"><i class="ti-email"></i></div>
+              <input
+                [readOnly]="user.google"
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                placeholder="Email"
+                formControlName="email"
+              />
+            </div>
+          </div>
+
+          <button
+            class="btn btn-success btn-block waves-effect waves-light m-r-10"
+          >
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Avatar</h4>
+        <div class="card-subtitle">Imagen del usuario</div>
+        <div class="row mb-3">
+          <div class="col text-center">
+            <img
+              [src]="user.img | getimagen"
+              *ngIf="!imagenSeleccionada"
+              class="avatar"
+            />
+            <img
+              [src]="url64ImageSelect"
+              *ngIf="imagenSeleccionada"
+              class="avatar"
+            />
+          </div>
+        </div>
+        <input type="file" (change)="onChangeImage($event.target.files[0])" />
+        <br />
+        <br />
+
+        <button
+          (click)="cambiarImagen()"
+          [disabled]="!imagenSeleccionada"
+          class="btn btn-success btn-block waves-effect waves-light m-r-10"
+        >
+          <i class="fa fa-save"></i>
+          Cambiar Imagen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

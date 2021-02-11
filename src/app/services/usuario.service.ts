@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../models/usuario.model';
@@ -15,6 +15,9 @@ declare const gapi: any;
 })
 export class UsuarioService {
   public auth2: any;
+  public user$: BehaviorSubject<Usuario> = new BehaviorSubject<Usuario>(
+    null
+  );
 
   constructor(
     private http: HttpClient,
@@ -24,8 +27,21 @@ export class UsuarioService {
     this.googleInit();
   }
 
+  actualizarUsuario(u: Usuario) {
+    console.log(this.user$.getValue().uid);
+    return this.http.put<UsuarioResponse>(`${BASE_URL}/usuarios/${this.user$.getValue().uid}`, u, {
+      headers: { token: this.token },
+    }).pipe(map((resp)=>{
+      this.user$.next(resp.usuarios[0]);
+      return resp;
+    }));
+  }
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
   validarToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
+    const token = this.token;
     return this.http
       .get<UsuarioResponse>(`${BASE_URL}/login/renew`, {
         headers: {
@@ -33,10 +49,9 @@ export class UsuarioService {
         },
       })
       .pipe(
-        tap((resp) => {
-          localStorage.setItem('token', resp.token);
-        }),
         map((resp) => {
+          localStorage.setItem('token', resp.token);
+          this.user$.next(resp.usuarios[0]);
           return true;
         }),
         catchError((err) => {
@@ -47,7 +62,6 @@ export class UsuarioService {
 
   googleInit() {
     return new Promise((resolve) => {
-      
       gapi.load('auth2', () => {
         this.auth2 = gapi.auth2.init({
           client_id:

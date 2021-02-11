@@ -319,7 +319,8 @@
             aria-haspopup="true"
             aria-expanded="false"
             ><img
-              src="./assets/images/users/1.jpg"
+              *ngIf="isLoading"
+              [src]="usuario.img | getimagen"
               alt="user"
               class="profile-pic"
           /></a>
@@ -328,22 +329,32 @@
               <li>
                 <div class="dw-user-box">
                   <div class="u-img">
-                    <img src="./assets/images/users/1.jpg" alt="user" />
+                    <img
+                      *ngIf="isLoading"
+                      [src]="usuario.img | getimagen"
+                      alt="user"
+                    />
                   </div>
                   <div class="u-text">
-                    <h4>Steave Jobs</h4>
-                    <p class="text-muted">varun@gmail.com</p>
+                    <h4>
+                      {{ usuario.nombre | titlecase | slice: 0:16 }}
+                      {{ usuario.nombre.length > 17 ? "..." : "" }}
+                    </h4>
+                    <p class="text-muted">
+                      {{ usuario.email | slice: 0:22 }}
+                      {{ usuario.email.length > 22 ? "..." : "" }}
+                    </p>
                     <a
-                      href="pages-profile.html"
+                      routerLink="./perfil"
                       class="btn btn-rounded btn-danger btn-sm"
-                      >View Profile</a
+                      >Ver Perfil</a
                     >
                   </div>
                 </div>
               </li>
               <li role="separator" class="divider"></li>
               <li>
-                <a href="#"><i class="ti-user"></i> My Profile</a>
+                <a routerLink="./perfil"><i class="ti-user"></i> Mi Perfil</a>
               </li>
               <li>
                 <a href="#"><i class="ti-wallet"></i> My Balance</a>
