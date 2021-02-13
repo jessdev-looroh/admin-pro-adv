@@ -17,6 +17,15 @@ export class SidebarService {
         {titulo:'Promesas',url:'promesas'},
         {titulo:'RXJS',url:'rxjs'},
       ]
+    },
+    {
+      titulo : 'Mantenimiento!!',
+      icono :'mdi mdi-gauge',
+      submenu: [
+        {titulo:'Usuarios',url:'usuarios'},
+        {titulo:'Hospitales',url:'hospitales'},
+        {titulo:'Medicos',url:'medicos'}
+      ]
     }
   ];
   constructor() { }

@@ -5,6 +5,7 @@ import { Err } from './error.model';
 export interface UsuarioResponse {
   exito: boolean;
   usuarios: Usuario[];
+  totalRegistros:number;
   token: string;
   err: Err;
 }

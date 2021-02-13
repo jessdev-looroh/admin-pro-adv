@@ -6,8 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class GetimagenPipe implements PipeTransform {
 
   transform(url:string="no-image",tipo:string="usuarios"): unknown {
-    
-    console.log(tipo);
+  
     if(url.includes('https')){
       return url;
     }else{

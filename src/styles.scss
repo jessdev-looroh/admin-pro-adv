@@ -8,3 +8,30 @@
 #themecolors .selector, .cursor{
     cursor: pointer;
 }
+
+.w100{
+    width: 100px;
+}
+
+.w140{
+    width: 140px;
+}
+.fondo-modal-imagen
+{
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+}
+.oculto{
+    display: none;
+}
+.mostrar{
+    display: block;
+}
+.avatar{
+    width: 50%;  
+}

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, delay, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../models/usuario.model';
 import { UsuarioResponse } from '../models/usuario.response';
@@ -14,10 +14,13 @@ declare const gapi: any;
   providedIn: 'root',
 })
 export class UsuarioService {
+  private pagina = 0;
+  private limite = 5;
+  private totalPaginas = 0;
+  private usuariosTmp: UsuarioResponse;
+
   public auth2: any;
-  public user$: BehaviorSubject<Usuario> = new BehaviorSubject<Usuario>(
-    null
-  );
+  public user$: BehaviorSubject<Usuario> = new BehaviorSubject<Usuario>(null);
 
   constructor(
     private http: HttpClient,
@@ -27,14 +30,69 @@ export class UsuarioService {
     this.googleInit();
   }
 
+  getUsuarios(siguientes: boolean): Observable<UsuarioResponse> {
+    let userResp: UsuarioResponse;
+    if (siguientes !== null) {
+      if (
+        this.pagina === this.totalPaginas &&
+        this.pagina !== 0 &&
+        siguientes
+      ) {
+        return of(this.usuariosTmp);
+      }
+      if (siguientes) this.pagina++;
+      else if (this.pagina > 1) {
+        this.pagina--;
+      } else {
+        return of(this.usuariosTmp);
+      }
+    }
+
+    return this.http
+      .get<Usuario[]>(
+        `${BASE_URL}/usuarios?pagina=${this.pagina}&limite=${this.limite}`,
+        { headers: { token: this.token } }
+      )
+      .pipe(
+        map((res: any) => {
+          this.totalPaginas = Math.ceil(res.totalRegistros / this.limite);
+          this.usuariosTmp = res;
+          return res;
+        })
+      );
+  }
+  eliminarUsuario(uid: string): Observable<boolean> {
+    return this.http
+      .delete<{ exito: boolean }>(`${BASE_URL}/usuarios/${uid}`, {
+        headers: { token: localStorage.getItem('token') },
+      })
+      .pipe(
+        map((res) => {
+          console.log(res);
+          return res.exito;
+        })
+      );
+  }
   actualizarUsuario(u: Usuario) {
-    console.log(this.user$.getValue().uid);
-    return this.http.put<UsuarioResponse>(`${BASE_URL}/usuarios/${this.user$.getValue().uid}`, u, {
-      headers: { token: this.token },
-    }).pipe(map((resp)=>{
-      this.user$.next(resp.usuarios[0]);
-      return resp;
-    }));
+    let uid= u.uid;
+    if(uid==null){
+        uid = this.user$.getValue().uid;
+    }
+    console.log(uid);
+    return this.http
+      .put<UsuarioResponse>(
+        `${BASE_URL}/usuarios/${uid}`,
+        u,
+        {
+          headers: { token: this.token },
+        }
+      )
+      .pipe(
+        map((resp) => {
+          this.user$.next(resp.usuarios[0]);
+          return resp;
+        })
+      );
   }
   get token(): string {
     return localStorage.getItem('token') || '';

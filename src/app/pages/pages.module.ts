@@ -14,6 +14,9 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
+import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
+import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 
 
 
@@ -26,7 +29,7 @@ import { PipesModule } from '../pipes/pipes.module';
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent, 
-    PerfilComponent
+    PerfilComponent, UsuariosComponent, HospitalesComponent, MedicosComponent
   ],
   imports: [
     CommonModule,
