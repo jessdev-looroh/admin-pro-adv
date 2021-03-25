@@ -103,7 +103,7 @@ export class UsuariosComponent implements OnInit {
   }
   abrirModal(user:Usuario){
     console.log(user);
-    this.modalService.abrirModal('usuarios',user);
+    this.modalService.abrirModal('usuarios',user.uid,user.img);
   }
   ngOnDestroy(): void {
     this.imgSubs$.unsubscribe();

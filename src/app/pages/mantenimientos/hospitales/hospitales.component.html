@@ -5,13 +5,15 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Buscar usuario..."
+          placeholder="Buscar Hospital..."
+          (keyup)="buscarHospital(buscadorHospital.value)"
+          #buscadorHospital
         />
       </div>
     </div>
   </div>
 </div>
-<div class="row animated fadeIn fast">
+<div class="row animated fadeIn fast" *ngIf="cargando">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
@@ -25,37 +27,70 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="!cargando">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Usuarios</h4>
-        <h6 class="card-subtitle">Usuarios registrados en mi aplicación</h6>
+        <div class="row">
+          <div class="col-6">
+            <h4 class="card-title">Hospitales ({{ hospitales.length }})</h4>
+            <h6 class="card-subtitle">
+              Hospitales registrados en mi aplicación
+            </h6>
+          </div>
+          <div class="col-6">
+            <div class="text-right">
+              <button class="btn btn-primary" (click)="abrirSweetAlert()">
+                <i class="fa fa-hospital-o"></i>
+                Crear Hospital
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>Avatar</th>
-                <th>Correo</th>
+                <th>Foto</th>
                 <th>Nombre</th>
-                <th>Role</th>
-                <th>Auth</th>
                 <th class="text-nowrap">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Lunar probe project</td>
-                <td>Lunar probe project</td>
-                <td>Lunar probe project</td>
-                <td>Lunar probe project</td>
-                <td>Lunar probe project</td>
-
-                <td class="text-nowrap">
-                  <a href="#" data-toggle="tooltip" data-original-title="Edit">
+              <tr *ngFor="let h of hospitales">
+                <td class="text-center w100">
+                  <img
+                    [src]="h.img | getimagen: 'hospitales'"
+                    alt=""
+                    style="width: 50px; height: 50px"
+                    class="cursor"
+                    (click)="abrirModal(h)"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder=""
+                    [(ngModel)]="h.nombre"
+                  />
+                </td>
+                <td class="text-nowrap text-center w100">
+                  <a
+                    class="cursor"
+                    (click)="guardarCambios(h)"
+                    data-toggle="tooltip"
+                    data-original-title="Guardar cambios"
+                  >
                     <i class="fa fa-pencil text-inverse m-r-10"></i>
                   </a>
-                  <a href="#" data-toggle="tooltip" data-original-title="Close">
+                  <a
+                    class="cursor"
+                    (click)="eliminarHospital(h)"
+                    data-toggle="tooltip"
+                    data-original-title="Borrar"
+                  >
                     <i class="fa fa-close text-danger"></i>
                   </a>
                 </td>
@@ -63,9 +98,9 @@
             </tbody>
           </table>
         </div>
-        <button class="btn btn-secondary mr-2">Anteriores</button>
+        <!-- <button class="btn btn-secondary mr-2">Anteriores</button>
 
-        <button class="btn btn-secondary">Siguientes</button>
+        <button class="btn btn-secondary">Siguientes</button> -->
       </div>
     </div>
   </div>

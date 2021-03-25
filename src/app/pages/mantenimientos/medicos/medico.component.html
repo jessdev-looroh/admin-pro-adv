@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Medico</h4>
+        <h6 class="card-subtitle">Actualizar información</h6>
+        <form
+          class="form p-t-20"
+          [formGroup]="medicoForm"
+          (submit)="guardarMedico()"
+        >
+          <div class="form-group" *ngIf="medicoSeleccionado">
+            <label for="exampleInputuname">Foto</label>
+            <div class="input-group justify-content-center">
+              <img
+                [src]="medicoSeleccionado.img | getimagen: 'medicos'"
+                class="w200"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="exampleInputuname" class="col-3">Nombre</label>
+            <div class="input-group col">
+              <div class="input-group-addon"><i class="ti-user"></i></div>
+              <input
+                type="text"
+                formControlName="nombre"
+                class="form-control"
+                id="exampleInputuname"
+                placeholder="Nombre del medico"
+              />
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <label for="exampleInputEmail1" class="col-3">Hospital</label>
+            <div class="input-group col">
+              <select class="form-control" formControlName="hospital">
+                <option value="">Seleccione un Hospital</option>
+                <option *ngFor="let h of hospitales" [value]="h._id">
+                  {{ h.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-success waves-effect waves-light m-r-10"
+            [disabled]="medicoForm.invalid"
+          >
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col fadeIn" *ngIf="hospitalSeleccionado">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Hospital</h4>
+        <h6 class="card-subtitle">Hospital asignado</h6>
+
+        <div class="form-group">
+          <label for="exampleInputuname">Foto</label>
+          <div class="input-group justify-content-center">
+            <img
+              [src]="hospitalSeleccionado.img | getimagen: 'hospitales'"
+              class="w200"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

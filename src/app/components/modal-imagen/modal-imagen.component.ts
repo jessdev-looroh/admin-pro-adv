@@ -35,7 +35,7 @@ export class ModalImagenComponent implements OnInit {
     };
   }
   actualizarImagen(){
-    let id = this.modalService.user.uid;
+    let id = this.modalService.uid;
     let tipo = this.modalService.tipo;
     let file = this.imagenSeleccionada;
 

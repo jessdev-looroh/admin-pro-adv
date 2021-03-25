@@ -17,6 +17,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
+import { MedicoComponent } from './mantenimientos/medicos/medico.component';
 
 
 
@@ -29,7 +30,7 @@ import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent, 
-    PerfilComponent, UsuariosComponent, HospitalesComponent, MedicosComponent
+    PerfilComponent, UsuariosComponent, HospitalesComponent, MedicosComponent, MedicoComponent
   ],
   imports: [
     CommonModule,

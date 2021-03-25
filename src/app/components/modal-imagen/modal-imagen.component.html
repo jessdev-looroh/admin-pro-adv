@@ -22,7 +22,7 @@
             class="close"
             data-dismiss="modal"
             aria-label="Close"
-            (click)="mostrarModal = false"
+            (click)="cerrarModal()"
           >
             <span aria-hidden="true">×</span>
           </button>
@@ -31,8 +31,8 @@
           <h3>Seleccione una imagen</h3>
           <div class="col text-center">
             <img
-              [src]="modalService.user.img | getimagen"
-              *ngIf="!imagenSeleccionada && modalService.user"
+              [src]="modalService.img | getimagen: modalService.tipo"
+              *ngIf="!imagenSeleccionada && modalService.uid"
               class="avatar"
             />
             <img
