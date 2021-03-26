@@ -19,6 +19,7 @@ export class UsuarioService {
   private totalPaginas = 0;
   private usuariosTmp: UsuarioResponse;
 
+  private rol:string;
   public auth2: any;
   public user$: BehaviorSubject<Usuario> = new BehaviorSubject<Usuario>(null);
 
@@ -108,7 +109,8 @@ export class UsuarioService {
       })
       .pipe(
         map((resp) => {
-          localStorage.setItem('token', resp.token);
+          this.guardarStorage(resp.token,resp.menu);
+          this.rol = resp.usuarios[0].role;
           this.user$.next(resp.usuarios[0]);
           return true;
         }),
@@ -116,6 +118,15 @@ export class UsuarioService {
           return of(false);
         })
       );
+  }
+
+  guardarStorage(token:string,menu:any){
+    localStorage.setItem('menu',JSON.stringify(menu));
+    localStorage.setItem('token',token);
+  }
+
+  get role(){
+    return this.rol;
   }
 
   googleInit() {
@@ -145,7 +156,7 @@ export class UsuarioService {
       .post<UsuarioResponse>(`${BASE_URL}/usuarios`, formData)
       .pipe(
         tap((resp) => {
-          localStorage.setItem('token', resp.token);
+          this.guardarStorage(resp.token,resp.menu);
         })
       );
   }
@@ -153,7 +164,7 @@ export class UsuarioService {
   login(formLogin: Usuario): Observable<UsuarioResponse> {
     return this.http.post<UsuarioResponse>(`${BASE_URL}/login`, formLogin).pipe(
       tap((resp) => {
-        localStorage.setItem('token', resp.token);
+        this.guardarStorage(resp.token,resp.menu);
       })
     );
   }
@@ -162,7 +173,7 @@ export class UsuarioService {
       .post<UsuarioResponse>(`${BASE_URL}/login/google`, { token })
       .pipe(
         tap((resp) => {
-          localStorage.setItem('token', resp.token);
+          this.guardarStorage(resp.token,resp.menu);
         })
       );
   }

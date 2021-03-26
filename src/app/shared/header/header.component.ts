@@ -24,4 +24,7 @@ export class HeaderComponent implements OnInit {
     this.userService.cerrarSesion();
     this.router.navigateByUrl('/login');
   }
+  buscar(termino){
+    this.router.navigateByUrl('/dashboard/busqueda/'+termino);
+  }
 }

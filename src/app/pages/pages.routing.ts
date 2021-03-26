@@ -13,12 +13,14 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: PagesComponent,
-    canActivate:[AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -26,14 +28,14 @@ const routes: Routes = [
         data: { titulo: 'Dashboard' },
       },
       {
-        path: 'progress',
-        component: ProgressComponent,
-        data: { titulo: 'Progress bar' },
-      },
-      {
         path: 'perfil',
         component: PerfilComponent,
         data: { titulo: 'Perfil' },
+      },
+      {
+        path: 'progress',
+        component: ProgressComponent,
+        data: { titulo: 'Progress bar' },
       },
       {
         path: 'grafica1',
@@ -52,12 +54,33 @@ const routes: Routes = [
       },
       { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Rxjs' } },
 
+      {
+        path: 'busqueda/:termino',
+        component: BusquedaComponent,
+        data: { titulo: 'Buscar' },
+      },
       //MANTENIMIENTOS
-      { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Hospitales' } },
-      { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Usuarios' } },
-      { path: 'medicos', component: MedicosComponent, data: { titulo: 'Medicos' } },
-      { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Medico' } },
-     
+      {
+        path: 'hospitales',
+        component: HospitalesComponent,
+        data: { titulo: 'Hospitales' },
+      },
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
+        data: { titulo: 'Usuarios' },
+        canActivate : [AdminGuard]
+      },
+      {
+        path: 'medicos',
+        component: MedicosComponent,
+        data: { titulo: 'Medicos' },
+      },
+      {
+        path: 'medico/:id',
+        component: MedicoComponent,
+        data: { titulo: 'Medico' },
+      },
     ],
   },
 ];

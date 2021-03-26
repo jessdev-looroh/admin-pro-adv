@@ -13,8 +13,8 @@ export class SidebarComponent implements OnInit {
   user : Usuario;
   isLoading= true;
   menuItems : any[];
-  constructor(private sidebarService : SidebarService,private userService : UsuarioService) { 
-    this.menuItems = sidebarService.menu;
+  constructor(public sidebarService : SidebarService,private userService : UsuarioService) { 
+    
     userService.user$.subscribe(u=>{
       this.user = u;
       this.isLoading=false;

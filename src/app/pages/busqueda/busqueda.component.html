@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Médicos</h3>
+        <div class="alert alert-info" *ngIf="medicos?.length == 0">
+          <p class="mb-0">No hay medicos con ese término</p>
+        </div>
+        <div class="table-responsive" *ngIf="medicos?.length > 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Nombre</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                *ngFor="let m of medicos"
+                (click)="medicoDetalle(m)"
+                class="cursor"
+              >
+                <th>
+                  <img
+                    [src]="m.img | getimagen: 'medicos'"
+                    alt=""
+                    style="width: 50px; height: 50px"
+                    class="cursor"
+                  />
+                </th>
+                <th>{{ m.nombre }}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Hospitales</h3>
+        <div class="alert alert-info" *ngIf="hospitales?.length == 0">
+          <p class="mb-0">No hay hospitales con ese término</p>
+        </div>
+        <div class="table-responsive" *ngIf="hospitales?.length > 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let h of hospitales">
+                <th>
+                  <img
+                    [src]="h.img | getimagen: 'hospitales'"
+                    alt=""
+                    style="width: 50px; height: 50px"
+                    class="cursor"
+                  />
+                </th>
+                <th>{{ h.nombre }}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Usuarios</h3>
+        <div class="alert alert-info" *ngIf="usuarios?.length == 0">
+          <p class="mb-0">No hay usuarios con ese término</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="usuarios?.length > 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let u of usuarios">
+                <th>
+                  <img
+                    [src]="u.img | getimagen"
+                    alt=""
+                    style="width: 50px; height: 50px"
+                    class="cursor"
+                  />
+                </th>
+                <th>{{ u.nombre }}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

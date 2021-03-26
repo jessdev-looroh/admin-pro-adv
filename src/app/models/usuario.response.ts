@@ -7,5 +7,6 @@ export interface UsuarioResponse {
   usuarios: Usuario[];
   totalRegistros:number;
   token: string;
+  menu: any;
   err: Err;
 }
